@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Purple\GeneralController;
+use App\Http\Controllers\SeoController;
+use App\Http\Controllers\HeadlessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/set-client-timezone', 
+    [GeneralController::class, 'setClientTimezone']
+)->name('setClientTimezone');
+
+Route::get('/sitemap.xml', 
+    [SeoController::class, 'sitemap']
+)->name('websiteSitemap');
+
+Route::get('/robots.txt', 
+    [SeoController::class, 'robots']
+)->name('websiteRobots');
+
+
+Route::name('productionSite.')->group(function () {
+    Route::get('/user-verification', 'App\Http\Controllers\ProductionController@userVerification')->name('userVerification');
+    Route::get('/code-verification', 'App\Http\Controllers\ProductionController@codeVerification')->name('codeVerification');
+    Route::get('/database-migration', 'App\Http\Controllers\ProductionController@databaseMigration')->name('databaseMigration');
+    Route::get('/database-migration', 'App\Http\Controllers\ProductionController@databaseMigration')->name('databaseMigration');
+    Route::post('/ajax-user-verification', 'App\Http\Controllers\ProductionController@ajaxUserVerification')->name('ajaxUserVerification');
+    Route::post('/ajax-code-verification', 'App\Http\Controllers\ProductionController@ajaxCodeVerification')->name('ajaxCodeVerification');
+});
+
+
+Route::get('/', 
+    [HeadlessController::class, 'show']
+)->name('websiteSetAsHeadlessCms');
+
+
+Route::name('setup.')->group(function () {
+    Route::get('/', 'App\Http\Controllers\SetupController@database')->name('database');
+    Route::get('/administrative', 'App\Http\Controllers\SetupController@administrative')->name('administrative');
+    Route::get('/finish', 'App\Http\Controllers\SetupController@finish')->name('finish');
+    Route::get('/ajax-database', 'App\Http\Controllers\SetupController@ajaxDatabase')->name('ajaxDatabase');
+    Route::get('/ajax-administrative', 'App\Http\Controllers\SetupController@ajaxAdministrative')->name('ajaxAdministrative');
 });
