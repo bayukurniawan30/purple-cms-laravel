@@ -44,7 +44,11 @@ Route::get('/',
 )->name('websiteSetAsHeadlessCms');
 
 
-Route::name('setup.')->group(function () {
+Route::group(['prefix' => '{locale}/setup', 'as' => 'setup.'], function ($locale) {
+    if (!in_array($locale, ['en', 'id'])) {
+        abort(400);
+    }
+
     Route::get('/', 'App\Http\Controllers\SetupController@database')->name('database');
     Route::get('/administrative', 'App\Http\Controllers\SetupController@administrative')->name('administrative');
     Route::get('/finish', 'App\Http\Controllers\SetupController@finish')->name('finish');
