@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Purple\GeneralController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\HeadlessController;
@@ -44,9 +45,9 @@ Route::get('/',
 )->name('websiteSetAsHeadlessCms');
 
 
-Route::group(['prefix' => '{locale}/setup', 'as' => 'setup.'], function ($locale) {
-    if (!in_array($locale, ['en', 'id'])) {
-        abort(400);
+Route::group(['prefix' => '{locale?}/setup', 'as' => 'setup.'], function ($locale = NULL) {
+    if (isset($locale) && in_array($locale, config('app.available_locales'))) {
+        App::setLocale($locale);
     }
 
     Route::get('/', 'App\Http\Controllers\SetupController@database')->name('database');

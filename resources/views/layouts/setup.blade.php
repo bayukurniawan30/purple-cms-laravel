@@ -29,7 +29,7 @@
             .setup-loader p {
                 font-size: 1rem;
             }
-            .purple-check-req-step, .purple-check-mbstring, .purple-check-intl, .purple-check-exif {
+            .purple-check-req-step, .purple-check-extension {
                 display: none;
             }
             .setup-information {
@@ -50,40 +50,31 @@
                 <div class="content-wrapper d-flex align-items-center auth text-center" style="background-image: linear-gradient(120deg, #63cfb3 0%, #9f5eff 100%)">
                     @if ($step == 'database' || $step == 'administrative')
                     <div class="uk-overlay uk-position-center setup-loader">
-                        <p><?= $currentLoad ?></p><br>
+                        <p>{{ $currentLoad }}</p><br>
                         
                         <div class="setup-loader-spinner" uk-spinner="ratio: 2"></div>
                         
                         <ul class="uk-iconnav uk-iconnav-vertical purple-check-req-step">
-                            <li class="uk-animation-slide-bottom-medium purple-check-php-version"><span class="purple-check-php-version-icon" uk-spinner></span> <span class="purple-check-php-version-text">Checking PHP version...</span></li>
-
-                            <li class="uk-animation-slide-bottom-medium purple-check-mbstring"><span class="purple-check-mbstring-icon" uk-spinner></span> <span class="purple-check-mbstring-text">Checking mbstring PHP extension...</span></li>
-
-                            <li class="uk-animation-slide-bottom-medium purple-check-intl"><span class="purple-check-intl-icon" uk-spinner></span> <span class="purple-check-intl-text">Checking intl PHP extension...</span></li>
-
-                            <li class="uk-animation-slide-bottom-medium purple-check-exif"><span class="purple-check-exif-icon" uk-spinner></span> <span class="purple-check-exif-text">Checking exif PHP extension...</span></li>
+                            <li class="uk-animation-slide-bottom-medium purple-check-php-version"><span class="purple-check-php-version-icon" uk-spinner></span> <span class="purple-check-php-version-text">{{ __('setup.check_php_version') }}</span></li>
+                            <li class="uk-animation-slide-bottom-medium purple-check-extension"><span class="purple-check-extension-icon" uk-spinner></span> <span class="purple-check-extension-text">{{  __('setup.check_php_extension') }}</span></li>
                         </ul>
                     </div>
                     @endif
                 </div>
-              <!-- content-wrapper ends -->
             </div>
-            <!-- page-body-wrapper ends -->
         </div>
-        <!-- container-scroller -->
 
         <div id="modal-setup-purple" class="uk-modal-full" uk-modal>
             <div class="uk-modal-dialog">
                 <div class="uk-grid-collapse uk-flex-middle" uk-grid>
                     <div class="uk-width-1-2@m uk-visible@m uk-background-contain setup-information" style="background-image: linear-gradient(120deg, #63cfb3 0%, #9f5eff 100%)" uk-height-viewport>
                         <div class="uk-overlay uk-overlay-default" uk-height-viewport>
-                            <img src="" alt="">
-                            <?= $this->Html->image('/master-assets/img/'.$vectorImg, ['alt' => $currentStep]) ?>
+                            <img src="/master-assets/img/{{ $vectorImg }}" alt="{{ $currentStep }}">
                             <div class="uk-position-bottom uk-padding">
-                                <h3 class="text-primary"><strong><?= $currentStep ?></strong></h3>
+                                <h3 class="text-primary"><strong>{{ $currentStep }}</strong></h3>
                                 <p class="uk-margin-remove-bottom">
-                                    <?= $currentDesc ?>
-                                    <br><a href="https://bayukurniawan30.github.io/purple-cms/#/" target="_blank"><span class="mdi mdi-open-in-new"></span> Read full documentation</a>
+                                    {{ $currentDesc }}
+                                    <br><a href="https://bayukurniawan30.github.io/purple-cms/#/" target="_blank"><span class="mdi mdi-open-in-new"></span> {{ __('setup.read_full_docs') }}</a>
                                 </p>
                             </div>
                         </div>
@@ -94,9 +85,9 @@
                                 <div class="col-lg-12">
                                     <div class="auth-form-light text-left">
                                         <div class="brand-logo">
-                                            <?= $this->Html->image('/master-assets/img/logo.svg', ['alt' => 'Setup Page', 'data-id' => 'login-cover-image', 'width' => '250']) ?>
+                                            <img src="/master-assets/img/logo.svg" alt="" data-id="login-cover-image" width="250">
                                         </div>
-                                        <h4 class="uk-margin-small"><?= $purpleTag ?></h4>
+                                        <h4 class="uk-margin-small">{{ $purpleTag }}</h4>
 
                                         @yield('content')
 
@@ -110,27 +101,29 @@
         </div>
 
         <!-- plugins:js -->
-        <?= $this->Html->script('/master-assets/plugins/parsley/dist/parsley.js'); ?>
-        <?= $this->Html->script('/master-assets/plugins/moment/moment.js'); ?>
-        <?= $this->Html->script('/master-assets/plugins/moment-timezone/moment-timezone-with-data.js'); ?>
-        <?php if ($checkStep == 'administrative'): ?>
-        <?= $this->Html->script('/master-assets/plugins/password/password.min.js'); ?>
-        <?= $this->Html->script('/master-assets/plugins/password/password-generator.js'); ?>
-        <?php endif; ?>
+        <script src="/master-assets/plugins/parsley/dist/parsley.js"></script>
+        <script src="/master-assets/plugins/moment/moment.js"></script>
+        <script src="/master-assets/plugins/moment-timezone/moment-timezone-with-data.js"></script>
+        @if ($step == 'administrative')
+            <script src="/master-assets/plugins/password/password.min.js"></script>
+            <script src="/master-assets/plugins/password/password-generator.js"></script>
+        @endif
         <!-- UI Kit -->
-        <?= $this->Html->script('/master-assets/plugins/uikit/js/uikit.js'); ?>
-        <?= $this->Html->script('/master-assets/plugins/uikit/js/uikit-icons.js'); ?>
+        <script src="/master-assets/plugins/uikit/js/uikit.js"></script>
+        <script src="/master-assets/plugins/uikit/js/uikit-icons.js"></script>
         <!-- End UI Kit -->
         <!-- endinject -->
         <!-- inject:js -->
-        <?= $this->Html->script('/master-assets/js/off-canvas.js'); ?>
-        <?= $this->Html->script('/master-assets/js/misc.js'); ?>
+        <script src="/master-assets/js/off-canvas.js"></script>
+        <script src="/master-assets/js/misc.js"></script>
         <!-- endinject -->
-        <?php
-            if ($checkStep == 'index'):
-        ?>
+
+        @if ($step == 'database')
         <script>
             $(document).ready(function() {
+                let versionCompare = {{ $phpVersionCheck }};
+                let extensionCheck = {{ $phpExtCheck }};
+
                 $('.purple-check-req-step').hide();
                 setTimeout(function() {
                     $('.setup-loader-spinner').hide();
@@ -144,185 +137,99 @@
                     // Icon
                     $('.purple-check-php-version').find('.purple-check-php-version-icon').removeClass('uk-spinner');
                     $('.purple-check-php-version').find('.purple-check-php-version-icon').removeAttr('uk-spinner');
-                <?php
-                    if (version_compare(PHP_VERSION, '7.1.3') >= 0):
-                ?>  
-                    // Icon
-                    $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: check');
-                    $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: check');
 
-                    // Text
-                    $('.purple-check-php-version').find('.purple-check-php-version-text').text('PHP 7.1.3 or greater');
-                <?php
-                    else:
-                ?>
-                    // List
-                    $('.purple-check-php-version').addClass('uk-text-danger');
-                    
-                    // Icon
-                    $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: warning');
+                    if (versionCompare) {
+                        // Icon
+                        $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: check');
+                        $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: check');
 
-                    // Text
-                    $('.purple-check-php-version').find('.purple-check-php-version-text').text('You need PHP 7.1.3 or greater');
-                <?php
-                    endif;
-                ?>
+                        // Text
+                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('PHP 7.3 or greater');
+                    } 
+                    else {
+                        // List
+                        $('.purple-check-php-version').addClass('uk-text-danger');
+                        
+                        // Icon
+                        $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: warning');
+
+                        // Text
+                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('You need PHP 7.3 or greater');
+                    }
                 }, 3000);
 
                 setTimeout(function() {
-                    $('.purple-check-mbstring').show();
+                    $('.purple-check-extension').show();
                 }, 3500);
 
                 setTimeout(function() {
                     // Icon
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-icon').removeClass('uk-spinner');
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-icon').removeAttr('uk-spinner');
-                <?php
-                    if (extension_loaded('intl')):
-                ?>  
-                    // Icon
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-icon').attr('uk-icon', 'icon: check');
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-icon').attr('uk-icon', 'icon: check');
-
-                    // Text
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-text').text('mbstring PHP extension enabled');
-                <?php
-                    else:
-                ?>
-                    // List
-                    $('.purple-check-mbstring').addClass('uk-text-danger');
+                    $('.purple-check-extension').find('.purple-check-extension-icon').removeClass('uk-spinner');
+                    $('.purple-check-extension').find('.purple-check-extension-icon').removeAttr('uk-spinner');
                     
-                    // Icon
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-icon').attr('uk-icon', 'icon: warning');
+                    if (extensionCheck) {
+                        // Icon
+                        $('.purple-check-extension').find('.purple-check-extension-icon').attr('uk-icon', 'icon: check');
+                        $('.purple-check-extension').find('.purple-check-extension-icon').attr('uk-icon', 'icon: check');
 
-                    // Text
-                    $('.purple-check-mbstring').find('.purple-check-mbstring-text').text('Please enable mbstring PHP extension');
-                <?php
-                    endif;
-                ?>
+                        // Text
+                        $('.purple-check-extension').find('.purple-check-extension-text').text('All required PHP extension enabled');
+                    }
+                    else {
+                        // List
+                        $('.purple-check-extension').addClass('uk-text-danger');
+                        
+                        // Icon
+                        $('.purple-check-extension').find('.purple-check-extension-icon').attr('uk-icon', 'icon: warning');
+
+                        // Text
+                        $('.purple-check-extension').find('.purple-check-extension-text').text('Please enable required PHP extension');
+                    }
                 }, 4500);
 
                 setTimeout(function() {
-                    $('.purple-check-intl').show();
-                }, 5000);
-
-                setTimeout(function() {
-                    // Icon
-                    $('.purple-check-intl').find('.purple-check-intl-icon').removeClass('uk-spinner');
-                    $('.purple-check-intl').find('.purple-check-intl-icon').removeAttr('uk-spinner');
-                <?php
-                    if (extension_loaded('intl')):
-                ?>  
-                    // Icon
-                    $('.purple-check-intl').find('.purple-check-intl-icon').attr('uk-icon', 'icon: check');
-                    $('.purple-check-intl').find('.purple-check-intl-icon').attr('uk-icon', 'icon: check');
-
-                    // Text
-                    $('.purple-check-intl').find('.purple-check-intl-text').text('intl PHP extension enabled');
-                <?php
-                    else:
-                ?>
-                    // List
-                    $('.purple-check-intl').addClass('uk-text-danger');
-                    
-                    // Icon
-                    $('.purple-check-intl').find('.purple-check-intl-icon').attr('uk-icon', 'icon: warning');
-
-                    // Text
-                    $('.purple-check-intl').find('.purple-check-intl-text').text('Please enable intl PHP extension');
-                <?php
-                    endif;
-                ?>
-                }, 6000);
-
-                setTimeout(function() {
-                    $('.purple-check-exif').show();
-                }, 6500);
-
-                setTimeout(function() {
-                    // Icon
-                    $('.purple-check-exif').find('.purple-check-exif-icon').removeClass('uk-spinner');
-                    $('.purple-check-exif').find('.purple-check-exif-icon').removeAttr('uk-spinner');
-                <?php
-                    if (extension_loaded('exif')):
-                ?>  
-                    // Icon
-                    $('.purple-check-exif').find('.purple-check-exif-icon').attr('uk-icon', 'icon: check');
-                    $('.purple-check-exif').find('.purple-check-exif-icon').attr('uk-icon', 'icon: check');
-
-                    // Text
-                    $('.purple-check-exif').find('.purple-check-exif-text').text('exif PHP extension enabled');
-                <?php
-                    else:
-                ?>
-                    // List
-                    $('.purple-check-exif').addClass('uk-text-danger');
-                    
-                    // Icon
-                    $('.purple-check-exif').find('.purple-check-exif-icon').attr('uk-icon', 'icon: warning');
-
-                    // Text
-                    $('.purple-check-exif').find('.purple-check-exif-text').text('Please enable exif PHP extension');
-                <?php
-                    endif;
-                ?>
-                }, 7500);
-
-                setTimeout(function() {
-                <?php
-                    if (version_compare(PHP_VERSION, '7.1.3') >= 0 && extension_loaded('intl') && extension_loaded('mbstring') && extension_loaded('exif')):
-                ?>
-                    $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">You are ready to go! </li>')
-                <?php
-                    else:
-                ?>
-                    $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">Your machine does not meet the minimum requirements.</li>')
-                <?php
-                    endif;
-                ?>
-                }, 8500);
+                    if (versionCompare && extensionCheck) {
+                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">You are ready to go! </li>')
+                    }
+                    else {
+                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">Your machine does not meet the minimum requirements.</li>')
+                    }
+                }, 5500);
             })
         </script>
-        <?php
-            endif;
+        @endif
 
-            if ($checkStep == 'index' || $checkStep == 'administrative' || ($this->request->getParam('controller') == 'Production' && ($checkStep == 'userVerification' || $checkStep == 'codeVerification' || $checkStep == 'databaseMigration'))):
-        ?>
+        @if ($step == 'database' || $step == 'administrative')
         <script>
             $(document).ready(function() {
-                <?php if ($checkStep == 'administrative'): ?>
+                let versionCompare = {{ $phpVersionCheck }};
+                let extensionCheck = {{ $phpExtCheck }};
+
+                @if ($step == 'administrative')
                 var userTimezone = moment.tz.guess();
                 $('select[name=timezone] option:contains('+userTimezone+')').attr('selected', 'selected');
-                <?php endif; ?>
+                @endif
 
-                <?php
-                    if (version_compare(PHP_VERSION, '7.1.3') >= 0 && extension_loaded('intl') && extension_loaded('mbstring') && extension_loaded('exif')):
-                ?>
+                if (versionCompare && extensionCheck) {
                     setTimeout(function() {
                         UIkit.modal('#modal-setup-purple').show();
                         $(".setup-loader").hide();
-                    <?php if ($checkStep == 'index') echo '}, 10000);'; else echo '}, 2000);'; ?>
-                <?php
-                    endif;
-                ?>
+                    @if ($step == 'database')
+                        }, 6600);
+                    @else
+                        }, 2000);
+                    @endif
+                }
             })
         </script>
-        <?php
-            else:
-        ?>
+        @else
         <script>
             $(document).ready(function() {
-                <?php
-                    if (version_compare(PHP_VERSION, '7.1.3') >= 0 && extension_loaded('intl') && extension_loaded('mbstring') && extension_loaded('exif')):
-                ?>
+                if (versionCompare && extensionCheck) {
                     UIkit.modal('#modal-setup-purple').show();
-                <?php
-                    endif;
-                ?>
+                }
             })
         </script>
-        <?php
-            endif;
-        ?>
+        @endif
     </body>
 </html>

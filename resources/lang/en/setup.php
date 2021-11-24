@@ -10,6 +10,10 @@ return [
     'administrative_description' => 'Create your account and site name for your website',
     'administrative_load' => 'Saving database and preparing administrative setup...',
     'finish_setup' => 'Finishing Setup',
-    'finish_description' => 'You are ready to go.'
+    'finish_description' => 'You are ready to go.',
+    'check_php_version' => 'Checking PHP version...',
+    'check_php_extension' => 'Checking PHP extension...',
+    'get_started' => 'Get Started with Purple CMS',
+    'read_full_docs' => 'Read full documentation'
 
 ];
