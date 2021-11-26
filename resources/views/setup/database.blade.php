@@ -2,16 +2,17 @@
 
 @section('content')
     <form id="form-database-setup" class="uk-grid pt-3" action="{{ route('setup.ajaxDatabase') }}" method="POST" data-parsley-validate>
+        @csrf
         <div class="uk-width-1-1 uk-margin-small">
             <input type="text" name="name" class="uk-input" placeholder="{{  __('setup.database_name_plh') }}" data-parsley-maxlength="30" uk-tooltip="title: {{ __('setup.database_name_tooltip') }}; pos: bottom-left" autofocus required>
         </div>
         <div class="uk-width-1-1 uk-margin-small">
-            <input type="text" name="username" class="uk-input" placeholder="{{  __('setup.username_plh') }}" uk-tooltip='title: {{ __('setup.username_tooltip') }}; pos: bottom-left' required>
+            <input type="text" name="username" class="uk-input" placeholder="{{  __('setup.username_plh') }}" uk-tooltip='title: {{ __('setup.username_tooltip') }}; pos: bottom-left' autocomplete="username" required>
         </div>
         <div class="uk-width-1-1 uk-margin-small">
             <div class="uk-inline" style="width: 100%">
                 <a id="button-visible-password" class="uk-form-icon uk-form-icon-flip" tabindex="-1" href="#" uk-icon="icon: lock" uk-tooltip="title: {{ __('setup.unlock_password') }}; pos: bottom-right"></a>
-                <input type="text" name="password" class="uk-input" placeholder="{{  __('setup.password_plh') }}" uk-tooltip='title: {{ __('setup.password_tooltip') }}; pos: bottom-left' autocomplete="current-password">
+                <input type="password" name="password" class="uk-input" placeholder="{{  __('setup.password_plh') }}" uk-tooltip='title: {{ __('setup.password_tooltip') }}; pos: bottom-left' autocomplete="current-password">
             </div>
         </div>
 
@@ -58,9 +59,11 @@
                     var errorMessageText  = '{{ __('setup.database_error') }}';
                     var redirect          = '{{ route('setup.administrative') }}'
                     var serializedData = $form.serialize();
+                    console.log(serializedData);
+
                     databaseSetup = $.ajax({
                         url: $form.attr('action'),
-                        type: "post",
+                        type: "POST",
                         beforeSend: function(){
                             $inputs.prop("disabled", true);
                             $button.html('<i class="fa fa-circle-o-notch fa-spin"></i> ' + buttonLoadingText);

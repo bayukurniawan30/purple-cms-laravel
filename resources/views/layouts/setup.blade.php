@@ -4,6 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Purple CMS | {{ $pageTitle }}</title>
 
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -17,9 +18,16 @@
         <link href="/master-assets/plugins/uikit/css/uikit.css" rel="stylesheet">
         <link href="/master-assets/css/lang.css" rel="stylesheet">
         <script src="/master-assets/js/vendor.bundle.base.js"></script>
-      
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        </script>
+
         <!-- Favicon -->
-        <link rel="icon" href="/master-assets/img/favicon.png'">
+        <link rel="icon" href="/master-assets/img/favicon.png">
         <style type="text/css">
             .auth .brand-logo img {
               width: 100%;
@@ -56,8 +64,8 @@
                         <div class="setup-loader-spinner" uk-spinner="ratio: 2"></div>
                         
                         <ul class="uk-iconnav uk-iconnav-vertical purple-check-req-step">
-                            <li class="uk-animation-slide-bottom-medium purple-check-php-version"><span class="purple-check-php-version-icon" uk-spinner></span> <span class="purple-check-php-version-text">{{ __('setup.check_php_version') }}</span></li>
-                            <li class="uk-animation-slide-bottom-medium purple-check-extension"><span class="purple-check-extension-icon" uk-spinner></span> <span class="purple-check-extension-text">{{  __('setup.check_php_extension') }}</span></li>
+                            <li class="uk-animation-slide-bottom-medium purple-check-php-version"><span class="purple-check-php-version-icon" uk-spinner="ratio: 0.5"></span> <span class="purple-check-php-version-text">{{ __('setup.check_php_version') }}</span></li>
+                            <li class="uk-animation-slide-bottom-medium purple-check-extension"><span class="purple-check-extension-icon" uk-spinner="ratio: 0.5"></span> <span class="purple-check-extension-text">{{  __('setup.check_php_extension') }}</span></li>
                         </ul>
                     </div>
                     @endif

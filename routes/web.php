@@ -48,8 +48,8 @@ Route::group(['prefix' => '/setup', 'as' => 'setup.'], function () {
     Route::get('/', 'App\Http\Controllers\SetupController@database')->name('database');
     Route::get('/administrative', 'App\Http\Controllers\SetupController@administrative')->name('administrative');
     Route::get('/finish', 'App\Http\Controllers\SetupController@finish')->name('finish');
-    Route::get('/ajax-database', 'App\Http\Controllers\SetupController@ajaxDatabase')->name('ajaxDatabase');
-    Route::get('/ajax-administrative', 'App\Http\Controllers\SetupController@ajaxAdministrative')->name('ajaxAdministrative');
+    Route::post('/ajax-database', 'App\Http\Controllers\SetupController@ajaxDatabase')->name('ajaxDatabase');
+    Route::post('/ajax-administrative', 'App\Http\Controllers\SetupController@ajaxAdministrative')->name('ajaxAdministrative');
 });
 
 Route::get('language/{locale}', function ($locale) {

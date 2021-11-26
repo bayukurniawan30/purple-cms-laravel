@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\SetupDatabaseRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 
 class SetupController extends Controller
 {
@@ -63,9 +67,20 @@ class SetupController extends Controller
 
         return view('setup.finish', $data);
     }
-    public function ajaxDatabase()
+    /**
+     * Store a new blog post.
+     *
+     * @param  \App\Http\Requests\SetupDatabaseRequest  $request
+     * @return Illuminate\Http\Response
+     */
+    public function ajaxDatabase(SetupDatabaseRequest $request)
     {
-        
+        // $validated = $request->validated();
+
+
+        // Storage::disk('local')->put('database.php', 'Contents');
+        // Crypt::encryptString($request->token);
+
     }
     public function ajaxAdministrative()
     {
