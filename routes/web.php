@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Purple\GeneralController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\HeadlessController;
@@ -45,14 +44,16 @@ Route::get('/',
 )->name('websiteSetAsHeadlessCms');
 
 
-Route::group(['prefix' => '{locale?}/setup', 'as' => 'setup.'], function ($locale = NULL) {
-    if (isset($locale) && in_array($locale, config('app.available_locales'))) {
-        App::setLocale($locale);
-    }
-
+Route::group(['prefix' => '/setup', 'as' => 'setup.'], function () {
     Route::get('/', 'App\Http\Controllers\SetupController@database')->name('database');
     Route::get('/administrative', 'App\Http\Controllers\SetupController@administrative')->name('administrative');
     Route::get('/finish', 'App\Http\Controllers\SetupController@finish')->name('finish');
     Route::get('/ajax-database', 'App\Http\Controllers\SetupController@ajaxDatabase')->name('ajaxDatabase');
     Route::get('/ajax-administrative', 'App\Http\Controllers\SetupController@ajaxAdministrative')->name('ajaxAdministrative');
+});
+
+Route::get('language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
 });

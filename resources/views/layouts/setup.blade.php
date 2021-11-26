@@ -15,6 +15,7 @@
         <link href="/master-assets/plugins/parsley/src/parsley.css" rel="stylesheet">
         <link href="/master-assets/css/style.css" rel="stylesheet">
         <link href="/master-assets/plugins/uikit/css/uikit.css" rel="stylesheet">
+        <link href="/master-assets/css/lang.css" rel="stylesheet">
         <script src="/master-assets/js/vendor.bundle.base.js"></script>
       
         <!-- Favicon -->
@@ -65,7 +66,7 @@
         </div>
 
         <div id="modal-setup-purple" class="uk-modal-full" uk-modal>
-            <div class="uk-modal-dialog">
+            <div class="uk-modal-dialog" uk-inline>
                 <div class="uk-grid-collapse uk-flex-middle" uk-grid>
                     <div class="uk-width-1-2@m uk-visible@m uk-background-contain setup-information" style="background-image: linear-gradient(120deg, #63cfb3 0%, #9f5eff 100%)" uk-height-viewport>
                         <div class="uk-overlay uk-overlay-default" uk-height-viewport>
@@ -96,6 +97,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="uk-position-small uk-position-bottom-right">
+                    @include('elements/language_switcher')
                 </div>
             </div>
         </div>
@@ -144,7 +149,7 @@
                         $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: check');
 
                         // Text
-                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('PHP 7.3 or greater');
+                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('{{ __('setup.php_version_ok') }}');
                     } 
                     else {
                         // List
@@ -154,7 +159,7 @@
                         $('.purple-check-php-version').find('.purple-check-php-version-icon').attr('uk-icon', 'icon: warning');
 
                         // Text
-                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('You need PHP 7.3 or greater');
+                        $('.purple-check-php-version').find('.purple-check-php-version-text').text('{{ __('setup.php_version_no') }}');
                     }
                 }, 3000);
 
@@ -173,7 +178,7 @@
                         $('.purple-check-extension').find('.purple-check-extension-icon').attr('uk-icon', 'icon: check');
 
                         // Text
-                        $('.purple-check-extension').find('.purple-check-extension-text').text('All required PHP extension enabled');
+                        $('.purple-check-extension').find('.purple-check-extension-text').text('{{ __('setup.all_ext_enabled') }}');
                     }
                     else {
                         // List
@@ -183,16 +188,16 @@
                         $('.purple-check-extension').find('.purple-check-extension-icon').attr('uk-icon', 'icon: warning');
 
                         // Text
-                        $('.purple-check-extension').find('.purple-check-extension-text').text('Please enable required PHP extension');
+                        $('.purple-check-extension').find('.purple-check-extension-text').text('{{ __('setup.please_enable_ext') }}');
                     }
                 }, 4500);
 
                 setTimeout(function() {
                     if (versionCompare && extensionCheck) {
-                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">You are ready to go! </li>')
+                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">{{ __('setup.check_ready') }}</li>')
                     }
                     else {
-                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">Your machine does not meet the minimum requirements.</li>')
+                        $('.purple-check-req-step').append('<li class="uk-animation-slide-bottom-medium">{{ __('setup.requirements_failed') }}</li>')
                     }
                 }, 5500);
             })
