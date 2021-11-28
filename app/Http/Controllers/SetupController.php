@@ -75,12 +75,14 @@ class SetupController extends Controller
      */
     public function ajaxDatabase(SetupDatabaseRequest $request)
     {
-        // $validated = $request->validated();
+        $validated = $request->validated();
 
 
         // Storage::disk('local')->put('database.php', 'Contents');
         // Crypt::encryptString($request->token);
-
+        return response()->json([
+            'status' => 'sdfsdf'
+        ]);
     }
     public function ajaxAdministrative()
     {

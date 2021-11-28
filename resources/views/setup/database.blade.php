@@ -2,7 +2,6 @@
 
 @section('content')
     <form id="form-database-setup" class="uk-grid pt-3" action="{{ route('setup.ajaxDatabase') }}" method="POST" data-parsley-validate>
-        @csrf
         <div class="uk-width-1-1 uk-margin-small">
             <input type="text" name="name" class="uk-input" placeholder="{{  __('setup.database_name_plh') }}" data-parsley-maxlength="30" uk-tooltip="title: {{ __('setup.database_name_tooltip') }}; pos: bottom-left" autofocus required>
         </div>
@@ -59,11 +58,11 @@
                     var errorMessageText  = '{{ __('setup.database_error') }}';
                     var redirect          = '{{ route('setup.administrative') }}'
                     var serializedData = $form.serialize();
-                    console.log(serializedData);
 
                     databaseSetup = $.ajax({
                         url: $form.attr('action'),
                         type: "POST",
+                        dataType: "json",
                         beforeSend: function(){
                             $inputs.prop("disabled", true);
                             $button.html('<i class="fa fa-circle-o-notch fa-spin"></i> ' + buttonLoadingText);
@@ -71,8 +70,7 @@
                         data: serializedData
                     });
                     databaseSetup.done(function (msg){
-                        console.log(msg);
-                        var json   = $.parseJSON(msg);
+                        var json   = msg;
                         var status = (json.status);
                         if(status == 'error') {
                             var error = (json.error);
